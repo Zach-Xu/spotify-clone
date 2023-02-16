@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar'
 
 const Home: NextPage = () => {
   return (
-    <div className="">
+    <div className="bg-black h-screen">
       <Head>
         <title>Spotify 2.0</title>
       </Head>

@@ -34,6 +34,18 @@ const Sidebar: React.FC = () => {
                 <hr className='border-t-[0.1px] border-t-black' />
 
                 {/* ToDo Playlists... */}
+                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
+                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
+                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
+                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
+                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
+                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
+                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
+                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
+                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
+                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
+                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
+                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
             </div>
         </div>
     )
