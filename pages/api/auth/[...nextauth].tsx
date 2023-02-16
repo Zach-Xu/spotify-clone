@@ -1,10 +1,6 @@
 import NextAuth, { AuthOptions } from 'next-auth'
-
 import SpotifyProvider from 'next-auth/providers/spotify'
-
 import spotifyApi, { LOGIN_URL } from '../../../lib/spotify';
-
-// import { JWT } from '../../../JWT.augment'
 import { JWT } from 'next-auth/jwt'
 
 
@@ -64,6 +60,13 @@ const options: AuthOptions = {
 
             // acess token has expired, so refresh it
             return await refreshAccessToken(token)
+        },
+        async session({ session, token }) {
+            session.user.accessToken = token.accessToken
+            session.user.refreshToken = token.refreshToekn
+            session.user.username = token.username
+
+            return session
         }
 
     }
