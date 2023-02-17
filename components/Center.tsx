@@ -20,16 +20,14 @@ const Center: React.FC = () => {
         setColor(shuffle(colors).pop()!)
     }, [])
 
-    if (!session) {
-        return <h1>Loading...</h1>
-    }
 
-    const { name, image } = session.user
+
+    const { name, image } = session!.user
 
     return (
         <div className="bg-black flex-grow">
             <header className={`h-[400px] bg-gradient-to-b ${color} to-black`}>
-                <div className="flex items-center space-x-2 absolute top-4 right-6 bg-red-400 pl-1 py-1 rounded-full text-white pr-2">
+                <div className="absolute flex items-center space-x-2 top-4 right-6 bg-red-400 pl-1 py-1 rounded-full text-white pr-2">
                     {
                         image ? <img src={image} className='w-10 h-10 rounded-full' alt="Spotify Profile Picture" /> : <UserCircleIcon className="w-10 h-10 rounded-full" />
                     }
