@@ -1,10 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { HomeIcon, MagnifyingGlassIcon, PlusCircleIcon, HeartIcon, RssIcon, BuildingLibraryIcon } from '@heroicons/react/24/outline'
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
+import useSpotify from '../hooks/useSpotify'
+
 
 const Sidebar: React.FC = () => {
+
+    const { data: session } = useSession()
+    const spotifyApi = useSpotify()
+    const [playlists, setPlaylists] = useState<SpotifyApi.PlaylistObjectSimplified[]>([])
+
+
+    useEffect(() => {
+        if (session) {
+            spotifyApi.getUserPlaylists().then(data => {
+                setPlaylists(data.body.items)
+            })
+        }
+
+    }, [session, spotifyApi])
+
     return (
-        <div className='p-5'>
+        <div className='p-5 h-screen overflow-scroll scrollbar-hide'>
             <div className='space-y-2'>
                 <button className='flex space-x-5 text-gray-500 hover:text-white items-center'
                     onClick={() => signOut()}>
@@ -39,19 +56,12 @@ const Sidebar: React.FC = () => {
                 </button>
                 <hr className='border-t-[0.1px] border-t-gray-600' />
 
-                {/* ToDo Playlists... */}
-                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
-                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
-                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
-                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
-                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
-                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
-                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
-                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
-                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
-                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
-                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
-                <p className='text-gray-500 hover:text-white cursor-pointer'>My playlist...</p>
+                {
+                    playlists.map(list => (
+                        <p key={list.id} className='text-gray-500 hover:text-white cursor-pointer'>{list.name}</p>
+                    ))
+                }
+
             </div>
         </div>
     )
