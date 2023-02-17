@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { HomeIcon, MagnifyingGlassIcon, PlusCircleIcon, HeartIcon, RssIcon, BuildingLibraryIcon } from '@heroicons/react/24/outline'
 import { signOut, useSession } from 'next-auth/react'
 import useSpotify from '../hooks/useSpotify'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppState } from '../redux/reducers'
+import { updateSelectedList } from '../redux/reducers'
 
 
 const Sidebar: React.FC = () => {
@@ -9,6 +12,11 @@ const Sidebar: React.FC = () => {
     const { data: session } = useSession()
     const spotifyApi = useSpotify()
     const [playlists, setPlaylists] = useState<SpotifyApi.PlaylistObjectSimplified[]>([])
+
+    const selectedList = useSelector((state: AppState) => state.selectedList)
+    const dispatch = useDispatch()
+
+    console.log('selected list is ', selectedList);
 
 
     useEffect(() => {
@@ -58,7 +66,9 @@ const Sidebar: React.FC = () => {
 
                 {
                     playlists.map(list => (
-                        <p key={list.id} className='text-gray-500 hover:text-white cursor-pointer'>{list.name}</p>
+                        <p key={list.id} className='text-gray-500 hover:text-white cursor-pointer'
+                            onClick={() => dispatch(updateSelectedList(list.id))}
+                        >{list.name}</p>
                     ))
                 }
 

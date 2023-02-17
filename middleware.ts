@@ -9,7 +9,6 @@ const middleware: NextMiddleware = async (req: NextRequest) => {
     // 1) token in presented
     // 2) its a request for next-auth session and provider fetching
     if (token || pathname.includes('/api/auth')) {
-        console.log('heerere')
         return NextResponse.next()
     }
 
