@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import { useSelector } from 'react-redux'
 import { AppState } from "../redux/reducers"
 import useSpotify from "../hooks/useSpotify"
+import Songs from "./Songs"
 
 const colors: string[] = [
     'from-blue-500',
@@ -20,7 +21,7 @@ const Center: React.FC = () => {
     const [color, setColor] = useState<string>('')
     const selectedList = useSelector((state: AppState) => state.selectedList)
     const spotifyApi = useSpotify()
-    const [playlist, setPlaylist] = useState<SpotifyApi.SinglePlaylistResponse | null>(null)
+    const [playlist, setPlaylist] = useState<SpotifyApi.SinglePlaylistResponse | undefined>()
 
 
     useEffect(() => {
@@ -44,14 +45,14 @@ const Center: React.FC = () => {
         }
     }, [selectedList])
 
-    console.log(playlist);
+    console.log(playlist?.tracks.items);
 
 
 
     const { name, image } = session!.user
 
     return (
-        <div className="bg-black flex-grow">
+        <div className="bg-black flex-grow h-screen overflow-scroll scrollbar-hide">
             <header className={`h-[400px] flex items-end bg-gradient-to-b ${color} to-black p-10`}>
                 <div className="absolute flex items-center space-x-2 top-4 right-6 bg-red-400 pl-1 py-1 rounded-full text-white pr-2">
                     {
@@ -73,8 +74,10 @@ const Center: React.FC = () => {
                 }
 
             </header>
-            <section>
-                hello
+            <section className="text-white ">
+                {
+                    playlist && <Songs songs={playlist.tracks.items} />
+                }
             </section>
         </div>
     )

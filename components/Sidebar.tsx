@@ -27,7 +27,7 @@ const Sidebar: React.FC = () => {
     }, [session, spotifyApi])
 
     return (
-        <div className='p-5 h-screen overflow-scroll scrollbar-hide hidden sm:max-w-[10rem] sm:inline-flex lg:max-w-[16rem]
+        <div className='p-5 h-screen overflow-scroll scrollbar-hide hidden sm:min-w-[10rem] sm:inline-flex md:min-w-[12rem] lg:max-w-[16rem]
         sm:text-sm md:text-base lg:text-lg'>
             <div className='space-y-2'>
                 <button className='flex space-x-5 text-gray-500 hover:text-white items-center'

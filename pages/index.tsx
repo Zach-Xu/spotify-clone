@@ -14,7 +14,7 @@ const Home: NextPage = () => {
 
   const { data, status } = useSession()
   return (
-    <div className="bg-black h-screen overflow-hidden">
+    <div className="bg-black h-screen w-screen overflow-hidden">
       <Head>
         <title>Spotify 2.0</title>
       </Head>
