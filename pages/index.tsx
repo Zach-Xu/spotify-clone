@@ -3,6 +3,7 @@ import { Session } from 'next-auth/core/types'
 import { getSession, useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Center from '../components/Center'
+import Player from '../components/Player'
 import Sidebar from '../components/Sidebar'
 
 interface ServerProps {
@@ -19,14 +20,14 @@ const Home: NextPage = () => {
         <title>Spotify 2.0</title>
       </Head>
 
-      <main className='flex'>
+      <main className='flex h-[90%]'>
         <Sidebar />
         <Center />
       </main>
 
-      <div>
-        {/* Player */}
-      </div>
+      <footer className=''>
+        <Player />
+      </footer>
     </div>
   )
 }

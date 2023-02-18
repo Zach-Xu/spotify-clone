@@ -2,14 +2,16 @@ import { artistsToString, millisToMinutesAndSeconds } from "../lib/helper"
 
 interface SongProps {
     song: SpotifyApi.PlaylistTrackObject
-    id: number
+    id: number,
+    onClick: () => {}
 }
 
-const Song: React.FC<SongProps> = ({ song, id }) => {
+const Song: React.FC<SongProps> = ({ song, id, onClick }) => {
 
 
     return (
-        <div className="grid md:grid-cols-3 hover:bg-gray-800 items-center px-2 py-3 text-gray-400 grid-cols-2 gap-2 pl-5" >
+        <div className="grid md:grid-cols-3 hover:bg-gray-800 items-center px-2 py-3 text-gray-400 grid-cols-2 gap-2 pl-5
+        hover:cursor-pointer" onClick={onClick}>
             <div className="flex items-center space-x-4">
                 <p>{id + 1}</p>
                 <img src={song.track?.album.images[0].url}

@@ -9,13 +9,13 @@ const useSpotify = (): SpotifyWebApi => {
 
     useEffect(() => {
         if (status === 'authenticated') {
-            // if refresh access token expired, redirect user to login
+            // if refresh access token is expired, redirect user to login
             if (session.error === 'RefreshAccessTokenError') {
                 signIn()
             }
             spotifyApi.setAccessToken(session.user.accessToken as string)
         }
-    }, [status])
+    }, [status, session])
 
     return spotifyApi
 }

@@ -45,14 +45,10 @@ const Center: React.FC = () => {
         }
     }, [selectedList])
 
-    console.log(playlist?.tracks.items);
-
-
-
     const { name, image } = session!.user
 
     return (
-        <div className="bg-black flex-grow h-screen overflow-scroll scrollbar-hide">
+        <div className="bg-black flex-grow overflow-scroll scrollbar-hide">
             <header className={`h-[400px] flex items-end bg-gradient-to-b ${color} to-black p-10`}>
                 <div className="absolute flex items-center space-x-2 top-4 right-6 bg-red-400 pl-1 py-1 rounded-full text-white pr-2">
                     {
