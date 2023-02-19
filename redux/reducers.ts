@@ -24,11 +24,11 @@ const appSlice = createSlice({
             ...state,
             selectedSongId: action.payload
         }),
-        playSong: (state, action: PayloadAction<boolean>) => ({
+        playSong: (state) => ({
             ...state,
             isPlaying: true
         }),
-        pauseSong: (state, action: PayloadAction<boolean>) => ({
+        pauseSong: (state) => ({
             ...state,
             isPlaying: false
         })

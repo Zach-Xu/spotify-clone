@@ -1,14 +1,22 @@
 import useSongInfo from "../hooks/useSongInfo"
 import { artistsToString } from "../lib/helper"
 import { PlayCircleIcon, PauseCircleIcon, ForwardIcon, BackwardIcon, ArrowPathRoundedSquareIcon } from '@heroicons/react/24/solid'
-import { useSelector } from "react-redux"
-import { AppState } from "../redux/reducers"
+import { useDispatch, useSelector } from "react-redux"
+import { AppState, pauseSong, playSong } from "../redux/reducers"
+import { debounce } from 'lodash'
+import { useCallback } from "react"
+
 
 const Player: React.FC = () => {
 
     const isPlaying = useSelector((state: AppState) => state.isPlaying)
     const songDetail = useSongInfo()
-    console.log('song detail is', songDetail)
+    const dispatch = useDispatch()
+
+    // useCallback to prevent the createion of new debounce function on every render to prevent memory leak
+    // use the debounce function to prevent spamming clicks on buttons
+    const debouncedPauseSong = useCallback(debounce(() => dispatch(pauseSong()), 100), [])
+    const debouncedPlaySong = useCallback(debounce(() => dispatch(playSong()), 100), [])
 
     return (
         <div className="bg-gray-900 h-[10vh] text-white grid grid-cols-3 ">
@@ -31,12 +39,15 @@ const Player: React.FC = () => {
             <div className="flex justify-evenly items-center">
                 <BackwardIcon className="button" />
                 {
-                    isPlaying ? <PauseCircleIcon className="button" /> : <PlayCircleIcon className="button" />
+                    isPlaying ?
+                        <PauseCircleIcon className="button" onClick={debouncedPauseSong} />
+                        :
+                        <PlayCircleIcon className="button" onClick={debouncedPlaySong} />
                 }
                 <ForwardIcon className="button" />
             </div>
             <div className="flex items-center justify-end mr-20">
-                <input type="range" min={0} max={100} value={0} />
+                <input type="range" min={0} max={100} />
             </div>
         </div>
     )
