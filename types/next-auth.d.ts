@@ -21,6 +21,6 @@ declare module "next-auth" {
             refreshToken?: string
             username?: string
         } & DefaultSession['user']
-        error: string
+        error: string | undefined
     }
 }

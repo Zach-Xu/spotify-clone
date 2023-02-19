@@ -18,18 +18,19 @@ const Songs: React.FC<SongsProps> = (props) => {
 
     const selectedSongId = useSelector((state: AppState) => state.selectedSongId)
 
-    console.log(playlistId, 'id')
-
     const play = (song: SpotifyApi.PlaylistTrackObject) => {
         // prevent re playing the same song
         if (song.track?.id === selectedSongId) {
             return
         }
-        console.log(song)
-        dispatch(updateSelectedSongId(song.track?.id))
-        dispatch(playSong())
+
         spotifyApi.play({
             uris: [song.track?.uri as string]
+        }).then(() => {
+            dispatch(updateSelectedSongId(song.track?.id))
+            dispatch(playSong())
+        }).catch(e => {
+            console.log('There is no active device')
         })
     }
     const { songs } = props

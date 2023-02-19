@@ -12,8 +12,6 @@ const Sidebar: React.FC = () => {
     const { data: session } = useSession()
     const spotifyApi = useSpotify()
     const [playlists, setPlaylists] = useState<SpotifyApi.PlaylistObjectSimplified[]>([])
-
-    const selectedList = useSelector((state: AppState) => state.selectedList)
     const dispatch = useDispatch()
 
 

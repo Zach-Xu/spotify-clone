@@ -50,16 +50,18 @@ const options: AuthOptions = {
                     refreshToekn: account.refresh_token,
                     username: account.providerAccountId,
                     accessTokenExpires: (account.expires_at || 3600) * 1000,
+
                 }
             }
 
             // returen previous token if the access token is not expired yet
             if (Date.now() < (token.accessTokenExpires as number)) {
-                console.log('Access Token is expired, Fetching new token...')
+                console.log('Access Token is valid, return it')
                 return token
             }
 
             // acess token has expired, so refresh it
+            console.log('Access Token is expired, Fetching new token...')
             return await refreshAccessToken(token)
         },
         async session({ session, token }) {
@@ -67,7 +69,7 @@ const options: AuthOptions = {
             session.user.accessToken = token.accessToken
             session.user.refreshToken = token.refreshToekn
             session.user.username = token.username
-
+            session.error = token.error
             return session
         }
 

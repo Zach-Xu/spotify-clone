@@ -26,7 +26,7 @@ const Player: React.FC = () => {
                     // trying to pause the song when it is alreay paused,
                     // however the button is still in play state
                     // therefore change the state to pause
-                    console.log('Song is already paused')
+                    console.log('Song is already paused or there is no active device')
                     dispatch(pauseSong())
                 })
         }
@@ -39,7 +39,7 @@ const Player: React.FC = () => {
                     // trying to play the song when it is alreay playing,
                     // however the button is still in paused state
                     // therefore change the state to play
-                    console.log('Song is already playing')
+                    console.log('Song is already playing or there is no active device')
                     dispatch(playSong())
                 })
         }
