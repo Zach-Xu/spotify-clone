@@ -20,15 +20,28 @@ const Player: React.FC = () => {
 
     const pause = () => {
         if (currentSong) {
-            spotifyApi.pause()
-            dispatch(pauseSong())
+            spotifyApi.pause().
+                then(() => dispatch(pauseSong()))
+                .catch(error => {
+                    // trying to pause the song when it is alreay paused,
+                    // however the button is still in play state
+                    // therefore change the state to pause
+                    console.log('Song is already paused')
+                    dispatch(pauseSong())
+                })
         }
     }
 
     const play = () => {
         if (currentSong) {
-            spotifyApi.play()
-            dispatch(playSong())
+            spotifyApi.play().then(() => dispatch(playSong()))
+                .catch(error => {
+                    // trying to play the song when it is alreay playing,
+                    // however the button is still in paused state
+                    // therefore change the state to play
+                    console.log('Song is already playing')
+                    dispatch(playSong())
+                })
         }
     }
 
@@ -46,13 +59,13 @@ const Player: React.FC = () => {
     const debouncedAdjustVolumn = useCallback(debounce((v: number) => spotifyApi.setVolume(v), 100), [])
 
     return (
-        <div className="bg-gray-900 h-[10vh] text-white grid grid-cols-3 ">
+        <div className="bg-gray-900 h-[10vh] text-white grid grid-cols-3 text-xs md:text-base">
             <div className="flex items-center pl-5 md:pl-10 space-x-3 md:space-x-5">
                 {
                     songDetail?.album?.images[0] &&
                     <>
-                        <img src={songDetail?.album?.images[0].url} alt=""
-                            className="w-10 h-10" />
+                        <img src={songDetail?.album?.images[0].url} alt="cover picture"
+                            className="w-10 h-10 hidden sm:inline-flex" />
                         <div>
                             <h5>
                                 {songDetail.name}
@@ -73,12 +86,12 @@ const Player: React.FC = () => {
                 }
                 <ForwardIcon className="button" />
             </div>
-            <div className="flex items-center justify-end mr-20 space-x-2">
+            <div className="flex items-center justify-end md:mr-20 mr-3 space-x-2">
                 {
-                    volumn === 0 ? <SpeakerXMarkIcon className="button w-6 h-6" onClick={() => { adjustVolumn(50) }} /> : <SpeakerWaveIcon onClick={() => adjustVolumn(0)} className="button w-6 h-6" />
+                    volumn === 0 ? <SpeakerXMarkIcon className="button" onClick={() => { adjustVolumn(50) }} /> : <SpeakerWaveIcon onClick={() => adjustVolumn(0)} className="button" />
                 }
 
-                <input type="range" min={0} max={100} value={volumn} onChange={(e) => adjustVolumn(Number(e.target.value))} />
+                <input type="range" min={0} className="w-[5rem] md:w-[12rem]" max={100} value={volumn} onChange={(e) => adjustVolumn(Number(e.target.value))} />
             </div>
         </div>
     )

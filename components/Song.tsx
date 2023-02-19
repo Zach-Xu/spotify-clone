@@ -22,7 +22,7 @@ const Song: React.FC<SongProps> = ({ song, id, onClick }) => {
                     <p >{artistsToString(song.track?.artists)}</p>
                 </div>
             </div>
-            <p className="w-[12rem] md:w-[15rem] lg:w-[25rem] hidden md:inline-block truncate">{song.track?.album.name}</p>
+            <p className="w-[12rem] ml-2 md:w-[15rem] lg:w-[25rem] hidden md:inline-block truncate">{song.track?.album.name}</p>
             <p className="justify-self-center">{millisToMinutesAndSeconds(song.track?.duration_ms)}</p>
         </div>
     )
