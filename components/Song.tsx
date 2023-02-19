@@ -14,15 +14,15 @@ const Song: React.FC<SongProps> = ({ song, id, onClick }) => {
         hover:cursor-pointer" onClick={onClick}>
             <div className="flex items-center space-x-4">
                 <p>{id + 1}</p>
-                <img src={song.track?.album.images[0].url}
+                <img src={song.track?.album.images[0]?.url ?? 'https://community.spotify.com/t5/image/serverpage/image-id/55829iC2AD64ADB887E2A5/image-size/large?v=v2&px=999'}
                     className='w-10 h-10'
                     alt="cover page of album on which the track appears" />
-                <div className="min-w[25rem] md:max-w-[12rem] lg:max-w-[20rem] truncate ">
+                <div className="w-[10rem] md:w-[12rem] lg:w-[20rem] truncate ">
                     <h5 className="text-white truncate">{song.track?.name}</h5>
                     <p >{artistsToString(song.track?.artists)}</p>
                 </div>
             </div>
-            <p className="max-w-[15rem] lg:max-w-[25rem] hidden md:inline-block truncate">{song.track?.album.name}</p>
+            <p className="w-[12rem] md:w-[15rem] lg:w-[25rem] hidden md:inline-block truncate">{song.track?.album.name}</p>
             <p className="justify-self-center">{millisToMinutesAndSeconds(song.track?.duration_ms)}</p>
         </div>
     )

@@ -62,8 +62,8 @@ const Center: React.FC = () => {
                     <div className="flex items-center text-white">
                         <img src={playlist.images[0].url} className='w-[12rem] mr-5' alt="" />
                         <div>
-                            <p className="mb-1 sm:text-1xl md:text-2xl lg:3xl">PLAYLIST</p>
-                            <h1 className="font-bold sm:text-3xl md:text-4xl  lg:text-5xl">{playlist.name}</h1>
+                            <p className="mb-1 text-1xl md:text-2xl lg:3xl">PLAYLIST</p>
+                            <h1 className="font-bold text-3xl md:text-4xl  lg:text-5xl">{playlist.name}</h1>
                         </div>
 
                     </div>

@@ -4,6 +4,6 @@
 
 @layer components {
     .button {
-        @apply h-8 w-8 hover:text-gray-300 cursor-pointer
+        @apply h-7 w-7 hover:text-gray-300 cursor-pointer
     }
 }

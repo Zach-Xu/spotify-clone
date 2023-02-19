@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux"
 import Song from "./Song"
 import { AppState, playSong, updateSelectedSongId } from '../redux/reducers'
 import useSpotify from "../hooks/useSpotify"
-import { useEffect } from "react"
 
 interface SongsProps {
     songs: SpotifyApi.PlaylistTrackObject[]
@@ -15,7 +14,17 @@ const Songs: React.FC<SongsProps> = (props) => {
 
     const spotifyApi = useSpotify()
 
+    const playlistId = useSelector((state: AppState) => state.selectedList)
+
+    const selectedSongId = useSelector((state: AppState) => state.selectedSongId)
+
+    console.log(playlistId, 'id')
+
     const play = (song: SpotifyApi.PlaylistTrackObject) => {
+        // prevent re playing the same song
+        if (song.track?.id === selectedSongId) {
+            return
+        }
         console.log(song)
         dispatch(updateSelectedSongId(song.track?.id))
         dispatch(playSong())
@@ -29,7 +38,7 @@ const Songs: React.FC<SongsProps> = (props) => {
         <div>
             {
                 songs.map((song, index) => (
-                    <Song key={song.track?.id ?? index} song={song} id={index} onClick={async () => play(song)} />
+                    <Song key={`${song.track?.id}-${playlistId}-${index}`} song={song} id={index} onClick={async () => play(song)} />
                 ))
             }
         </div>
