@@ -12,12 +12,12 @@ const scopes: string = [
     'user-follow-read',
     'playlist-read-private',
     'playlist-read-collaborative',
-    'streaming'
-    // 'user-library-modify'
+    'streaming',
+    'user-library-modify'
 ].join(',')
 
 const params = {
-    scopes
+    scope: scopes
 }
 
 const queryParamString = new URLSearchParams(params).toString()

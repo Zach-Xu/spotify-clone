@@ -5,18 +5,36 @@ import { useDispatch, useSelector } from "react-redux"
 import { AppState, pauseSong, playSong } from "../redux/reducers"
 import { debounce } from 'lodash'
 import { useCallback } from "react"
+import useSpotify from "../hooks/useSpotify"
 
 
 const Player: React.FC = () => {
 
     const isPlaying = useSelector((state: AppState) => state.isPlaying)
+    const currentSong = useSelector((state: AppState) => state.selectedSongId)
     const songDetail = useSongInfo()
     const dispatch = useDispatch()
+    const spotifyApi = useSpotify()
 
-    // useCallback to prevent the createion of new debounce function on every render to prevent memory leak
+
+    const pause = () => {
+        if (currentSong) {
+            spotifyApi.pause()
+            dispatch(pauseSong())
+        }
+    }
+
+    const play = () => {
+        if (currentSong) {
+            spotifyApi.play()
+            dispatch(playSong())
+        }
+    }
+
+    // useCallback to prevent the createion of new debounce function on every render to prevent potential memory leak
     // use the debounce function to prevent spamming clicks on buttons
-    const debouncedPauseSong = useCallback(debounce(() => dispatch(pauseSong()), 100), [])
-    const debouncedPlaySong = useCallback(debounce(() => dispatch(playSong()), 100), [])
+    const debouncedPauseSong = useCallback(debounce(pause, 100), [currentSong, spotifyApi])
+    const debouncedPlaySong = useCallback(debounce(play, 100), [currentSong, spotifyApi])
 
     return (
         <div className="bg-gray-900 h-[10vh] text-white grid grid-cols-3 ">
