@@ -1,4 +1,4 @@
-import { artistsToString, millisToMinutesAndSeconds } from "../lib/helper"
+import { artistsToString, millisToMinutesAndSeconds } from "../../lib/helper"
 
 interface SongProps {
     song: SpotifyApi.PlaylistTrackObject

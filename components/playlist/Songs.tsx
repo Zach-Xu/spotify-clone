@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import Song from "./Song"
-import { AppState, playSong, updateSelectedSongId } from '../redux/reducers'
-import useSpotify from "../hooks/useSpotify"
+import { AppState, playSong, updateSelectedSongId } from '../../redux/reducers'
+import useSpotify from "../../hooks/useSpotify"
 
 interface SongsProps {
     songs: SpotifyApi.PlaylistTrackObject[]

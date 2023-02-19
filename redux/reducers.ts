@@ -1,15 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { MenuOptions } from '../lib/constant'
 
 export interface AppState {
     selectedList: string | null
     selectedSongId: string | undefined
     isPlaying: boolean
+    selectedOption: MenuOptions
 }
 
 const initialState: AppState = {
     selectedList: null,
     selectedSongId: '',
-    isPlaying: false
+    isPlaying: false,
+    selectedOption: MenuOptions.Home
 }
 
 const appSlice = createSlice({
@@ -31,10 +34,14 @@ const appSlice = createSlice({
         pauseSong: (state) => ({
             ...state,
             isPlaying: false
+        }),
+        selectItem: (state, action: PayloadAction<MenuOptions>) => ({
+            ...state,
+            selectedOption: action.payload
         })
 
     }
 })
 
-export const { updateSelectedList, updateSelectedSongId, pauseSong, playSong } = appSlice.actions
+export const { updateSelectedList, updateSelectedSongId, pauseSong, playSong, selectItem } = appSlice.actions
 export default appSlice.reducer

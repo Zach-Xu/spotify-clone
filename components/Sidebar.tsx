@@ -3,8 +3,9 @@ import { HomeIcon, MagnifyingGlassIcon, PlusCircleIcon, HeartIcon, RssIcon, Buil
 import { signOut, useSession } from 'next-auth/react'
 import useSpotify from '../hooks/useSpotify'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppState } from '../redux/reducers'
+import { AppState, selectItem } from '../redux/reducers'
 import { updateSelectedList } from '../redux/reducers'
+import { MenuOptions } from '../lib/constant'
 
 
 const Sidebar: React.FC = () => {
@@ -13,7 +14,7 @@ const Sidebar: React.FC = () => {
     const spotifyApi = useSpotify()
     const [playlists, setPlaylists] = useState<SpotifyApi.PlaylistObjectSimplified[]>([])
     const dispatch = useDispatch()
-
+    const selectedOption = useSelector((state: AppState) => state.selectedOption)
 
     useEffect(() => {
         if (session) {
@@ -26,6 +27,13 @@ const Sidebar: React.FC = () => {
 
     }, [session, spotifyApi])
 
+    const playlistClickHandler = (listId: string) => {
+        dispatch(updateSelectedList(listId))
+        if (selectedOption !== MenuOptions.Playlist) {
+            dispatch(selectItem(MenuOptions.Playlist))
+        }
+    }
+
     return (
         <div className='p-5 overflow-scroll scrollbar-hide hidden min-w-[10rem] sm:inline-flex md:max-w-[12rem] lg:max-w-[16rem]
         sm:text-sm md:text-base lg:text-lg'>
@@ -37,7 +45,7 @@ const Sidebar: React.FC = () => {
                 </button>
                 <button className='flex space-x-5 text-gray-500 hover:text-white items-center'>
                     <HomeIcon className='w-5 h-5' />
-                    <p>Home</p>
+                    <p onClick={() => dispatch(selectItem(MenuOptions.Home))}>Home</p>
                 </button>
                 <button className='flex space-x-5 text-gray-500 hover:text-white items-center'>
                     <MagnifyingGlassIcon className='w-5 h-5' />
@@ -66,7 +74,11 @@ const Sidebar: React.FC = () => {
                 {
                     playlists.map(list => (
                         <p key={list.id} className='text-gray-500 hover:text-white cursor-pointer'
-                            onClick={() => dispatch(updateSelectedList(list.id))}
+                            onClick={() => {
+                                console.log(111)
+                                playlistClickHandler(list.id)
+
+                            }}
                         >{list.name}</p>
                     ))
                 }
