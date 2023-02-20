@@ -1,5 +1,4 @@
-import { useSession } from "next-auth/react"
-import { UserCircleIcon, ChevronDownIcon } from '@heroicons/react/24/outline'
+import { signIn, useSession } from "next-auth/react"
 import { shuffle } from 'lodash'
 import { Fragment, useEffect, useState } from "react"
 import { useSelector } from 'react-redux'
@@ -25,6 +24,7 @@ const Playlist: React.FC = () => {
 
 
     useEffect(() => {
+
         const getRandomColor = (currentColor: string, colors: string[]): string => {
             const shuffledColor = shuffle(colors)
             const randomColor = shuffledColor.pop()!
@@ -38,25 +38,25 @@ const Playlist: React.FC = () => {
         setColor(color => getRandomColor(color, colors))
 
         const fetchPlaylistDetail = (playlistId: string) => {
-            spotifyApi.getPlaylist(playlistId).then(data => setPlaylist(data.body))
+
+            spotifyApi.getPlaylist(playlistId)
+                .then(data => setPlaylist(data.body))
+                .catch(error => {
+                    console.log(error)
+                    // potential token expired error
+                    signIn()
+                })
         }
         if (selectedList) {
             fetchPlaylistDetail(selectedList)
         }
     }, [selectedList])
 
-    const { name, image } = session!.user
+
 
     return (
         <Fragment>
             <header className={`h-[400px] flex items-end bg-gradient-to-b ${color} to-black p-10`}>
-                <div className="absolute flex items-center space-x-2 top-4 right-6 bg-red-400 pl-1 py-1 rounded-full text-white pr-2">
-                    {
-                        image ? <img src={image} className='w-10 h-10 rounded-full' alt="Spotify Profile Picture" /> : <UserCircleIcon className="w-10 h-10 rounded-full" />
-                    }
-                    <p className="">{name}</p>
-                    <ChevronDownIcon className="w-4 h-4" />
-                </div>
                 {
                     playlist &&
                     <div className="flex items-center text-white">

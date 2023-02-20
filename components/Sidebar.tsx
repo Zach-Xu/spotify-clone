@@ -75,9 +75,7 @@ const Sidebar: React.FC = () => {
                     playlists.map(list => (
                         <p key={list.id} className='text-gray-500 hover:text-white cursor-pointer'
                             onClick={() => {
-                                console.log(111)
                                 playlistClickHandler(list.id)
-
                             }}
                         >{list.name}</p>
                     ))
